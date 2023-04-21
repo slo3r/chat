@@ -16,7 +16,7 @@ h1{
   font-family: 'Poppins', sans-serif;
 }
 .form-container{
-  height: 600px;
+  height: 650px;
   padding: 10px 130px;
   display: flex;
   flex-direction: column;
@@ -63,7 +63,7 @@ width: 100%;
   cursor: pointer;
   transition: 0.3s;
   position:absolute;
-  top: 530px;
+  top: 600px;
 }
 .Switch:hover{
 font-size: 110%;
@@ -90,10 +90,31 @@ height: 100%;
 .active-user img{
   width: 80px;
   height: 80px;
+}
+.currentUserImg{
+  cursor: pointer;
   margin-right: 20px;
   margin-left: 10px;
-  border-radius: 50%;
+}
+.currentUserImg:hover .changePicture {
+  display: unset;
   cursor: pointer;
+}
+.changePicture{
+  display: none;
+  line-height: 80px;
+  text-align: center;
+  position: absolute;
+  color: white;
+  /* background-color: #000000d2; */
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  font-size: 15px;
+  top: 7px;
+  left: 9px;
+  backdrop-filter: blur(10px);
+  border: solid #000000 3px;
 }
 .userName{
   font-size: 30px;
@@ -191,7 +212,15 @@ cursor: pointer;
 .nav p{
   font-size: 20px;
 }
-
+.userSearchInput{
+  height: 70px;
+  width: 100%; 
+  border: none;
+  font-size: 20px;
+  box-sizing: border-box;
+  padding: 0px 20px;
+  outline: none;
+}
 /* Chat Container */
 .chat{
   display: flex;
