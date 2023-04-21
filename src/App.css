@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.hide{
+  display: none;
+}
+/*---Login-Register---*/
+.form-box{
+  background-image: url("./images/wallpaper.jpg");
+  background-size: 100%;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h1{
+  font-family: 'Poppins', sans-serif;
+}
+.form-container{
+  height: 600px;
+  padding: 10px 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  gap: 90px;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(0, 0, 0, 0.7);
+}
+.form-container form{
+display: flex;
+flex-direction: column;
+gap: 50px;
+width: 100%;
+}
+.Input{
+  font-size: large;
+  background: transparent;
+  border: none;
+  padding: 15px;
+  width: 250px;
+  border-bottom: 2px solid #000000;
+  font-family: 'Poppins', sans-serif;
+  
+}
+.Input:focus{
+  outline: none;
+}
+.Button{
+  background-color: rgb(255, 217, 50, 0.3);
+  border-radius: 30px;
+  padding: 15px;
+  font-size: large;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.3s;
+}
+.Button:hover{
+  background-color: rgb(255, 217, 50, 0.7);
+}
+.Switch{
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: 0.3s;
+  position:absolute;
+  top: 530px;
+}
+.Switch:hover{
+font-size: 110%;
+}
+/*---Sidebar---*/
+.sidebar{
+background-color: rgb(102, 102, 102);
+/* width: 400px; */
+min-height: 100vh;
+font-family: 'Poppins', sans-serif;
+background: rgb(240,199,106);
+background: linear-gradient(49deg, rgba(240,199,106,1) 0%, rgba(187,100,30,1) 57%, rgba(158,85,26,1) 100%, rgba(65,34,6,1) 100%);
+transition: 0.3s;
+display: flex;
+flex-direction: column;
+height: 100%;
+
+}
+/*---Current User---*/
+.active-user{
+  display: flex;
+  align-items: center;
+}
+.active-user img{
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  margin-left: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.userName{
+  font-size: 30px;
+  margin-right: auto;
+}
+/*---Slider---*/
+.slider{
+  background: rgb(240,199,106);
+  background: linear-gradient(321deg, rgba(240,199,106,1) 0%, rgba(187,100,30,1) 50%, rgba(65,34,6,1) 100%);
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 375px;
+  top: 80px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.slider:hover{
+background: red;
+}
+
+/*---Users---*/
+
+.users{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgb(255, 255, 255);
+}
+.users p{
+  font-size: 25px;
+  margin-right: 10px;
+  margin-left: 5px;
+}
+.userlist{
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 100vh;
+}
+.userlist::-webkit-scrollbar{
+  width: 5px;
+}
+.userlist::-webkit-scrollbar-track{
+  background: rgba(255, 255, 255, 0.158);
+}
+.userlist::-webkit-scrollbar-thumb{
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+.userlist hr{
+  margin: auto;
+  margin-top: -30px;
+}
+
+.userlist-user{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userlist-user:hover{
+background-color: #ca2929;
+cursor: pointer;
+}
+.userlist-user img{
+  height: 50px;
+  width: 50px;
+  margin-right: 20px;
+  margin-left: 20px;
+  
+}
+
+/*---Bottom Nav---*/
+
+.nav{
+  margin-top: auto;
+}
+.nav-child{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 400px; 
+  border-top: 1px solid rgb(255, 255, 255);
+  transition: 0.3s;
+}
+.nav-child:hover{
+  background-color: #ca2929;
+  cursor: pointer;
+}
+.nav p{
+  font-size: 20px;
+}
+
+/* Chat Container */
+.chat{
+  display: flex;
+  height: 100vh;
+  padding-right: 100px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.chatComponent{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.bckgrimage {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  filter: blur(2px);
+  background-image: url("./images/wallpaper.jpg");
+  background-size: cover;
+}
+.topBar{
+display: flex;
+align-items: center;
+justify-content: center;
+background: rgb(187,100,30);
+background: linear-gradient(98deg, rgba(187,100,30,1) 0%, rgba(240,199,106,1) 52%, rgba(187,100,30,1) 100%, rgba(65,34,6,1) 100%);
+padding: 10px;
+}
+.topBar img {
+height: 50px;
+width: 50px;
+margin-left: auto;
+margin-right: 10px;
+}
+.topBar p{
+  margin-right: auto;
+}
+.mainBar{
+max-height: calc(100vh - 120px);
+/* background-color: green; */
+}
+.inputBar{
+  margin-top: auto;
+}
+.inputBar input{
+  font-size: 20px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 2px solid rgb(255, 255, 255);
+}
+.inputBar input:focus{
+  outline: none;
+}
+.send-icon:hover{
+  color: rgb(255, 0, 0);
+}
+.dots:hover{
+color:white;
+}
+.msg{
+  width: 100%;
+  height: 100%;
+}
+
+/* Chat Settings */
+
+.chatSettingsTab{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100px;
+  background-color: white;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  border-left: 1px solid black;
+  transition: 0.3s;
+   overflow-x: hidden;
+}
+.closeSettings{
+  padding: 5px;
+  margin-left: auto;
+  cursor: pointer;
+}
+.closeSettings:hover{
+  color:rgb(255, 0, 0);
+}
+.chatSettingsContent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chatSettingsUsers{
+  padding: 10px 60px;
+  border-bottom: 1px solid black;
+}
+/* Messages */
+
+.messages{
+  overflow-y: scroll;
+  max-height: calc(100vh - 120px);
+  /* max-height: 100%; */
+}
+.messages::-webkit-scrollbar{
+  width: 10px;
+}
+.messages::-webkit-scrollbar-track{
+  background: rgba(255, 255, 255, 0.158);
+}
+.messages::-webkit-scrollbar-thumb{
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+.message{
+display: flex;
+padding: 30px;
+
+}
+.messageInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+.messageInfo img{
+width: 50px;
+height: 50px;
+
+}
+.messageContent{
+padding: 0px 50px;
+background-color: white;
+border-radius: 40px;
+font-size: 20px;
+max-width: 50%;
+}
+.messageContent p{
+  word-wrap: break-word;
+  
+}
