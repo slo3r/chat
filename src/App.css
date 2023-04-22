@@ -162,9 +162,6 @@ background: red;
 .userlist::-webkit-scrollbar{
   width: 5px;
 }
-.userlist::-webkit-scrollbar-track{
-  background: rgba(255, 255, 255, 0.158);
-}
 .userlist::-webkit-scrollbar-thumb{
   background: rgb(255, 255, 255);
   border-radius: 10px;
@@ -205,6 +202,27 @@ cursor: pointer;
   border-top: 1px solid rgb(255, 255, 255);
   transition: 0.3s;
 }
+.userSearch{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 400px; 
+  border-top: 1px solid rgb(255, 255, 255);
+  transition: 0.3s;
+}
+.userSearchIcon{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-shrink: 4;
+}
+.userSearchIcon:hover{
+  cursor: pointer;
+  background-color: #ca2929;
+}
+
 .nav-child:hover{
   background-color: #ca2929;
   cursor: pointer;
@@ -329,9 +347,6 @@ color:white;
 }
 .messages::-webkit-scrollbar{
   width: 10px;
-}
-.messages::-webkit-scrollbar-track{
-  background: rgba(255, 255, 255, 0.158);
 }
 .messages::-webkit-scrollbar-thumb{
   background: rgb(255, 255, 255);

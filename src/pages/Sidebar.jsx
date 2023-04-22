@@ -128,8 +128,10 @@ const Sidebar = (props) => {
         </div>
 
         <div className='nav'>
-          <div style={{ width: isOpen ? '400px' : '100px' }} className='userSearch nav-child'>
-            <AiOutlineSearch size="40px"/>
+          <div style={{ width: isOpen ? '400px' : '100px' }} className='userSearch'>
+            <div className='userSearchIcon'>
+            <AiOutlineSearch size="40px" style={{ marginLeft: '30px', marginRight: '30px'}}/>
+            </div>
             {/* <p style={{ display: isOpen ? 'unset' : 'none' }}>Search for user</p> */}
             <input placeholder="Search for an user" style={{ display: isOpen ? 'unset' : 'none' }} className='userSearchInput'></input>
           </div>
