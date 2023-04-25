@@ -202,8 +202,42 @@ cursor: pointer;
   border-top: 1px solid rgb(255, 255, 255);
   transition: 0.3s;
 }
+
+/* Search */
+.searchResult{
+  
+  position: absolute;
+  bottom: 213px;
+  width: 300px;
+  margin-left: 100px;
+}
+.searchEntry{
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-top: solid black 1px;
+  background-color: rgb(177, 177, 177);
+}
+.searchEntry img{
+  width: 30px;
+  height: 30px;
+}
+.searchEntry p{
+  margin-right: auto;
+  margin-left: 5px;
+}
+.searchEntry:hover{
+background-color:rgb(255, 0, 0);
+cursor: pointer;
+}
+.searchPanel{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
 .userSearch{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 70px;
@@ -380,3 +414,4 @@ max-width: 50%;
   word-wrap: break-word;
   
 }
+

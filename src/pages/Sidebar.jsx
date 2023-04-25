@@ -5,11 +5,11 @@ import { AuthContext } from '../context/AuthContext';
 import userImage from '../images/user.png';
 import { MdOutlineLogout } from 'react-icons/md';
 import { HiOutlineArrowSmLeft } from 'react-icons/hi';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { GrGroup } from 'react-icons/gr';
 import { BsChatSquareDots } from 'react-icons/bs';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
+import Search from './Search';
 
 const Sidebar = (props) => {
   // toggle sidebar
@@ -128,13 +128,7 @@ const Sidebar = (props) => {
         </div>
 
         <div className='nav'>
-          <div style={{ width: isOpen ? '400px' : '100px' }} className='userSearch'>
-            <div className='userSearchIcon'>
-            <AiOutlineSearch size="40px" style={{ marginLeft: '30px', marginRight: '30px'}}/>
-            </div>
-            {/* <p style={{ display: isOpen ? 'unset' : 'none' }}>Search for user</p> */}
-            <input placeholder="Search for an user" style={{ display: isOpen ? 'unset' : 'none' }} className='userSearchInput'></input>
-          </div>
+            <Search isOpen={isOpen} />
           <div style={{ width: isOpen ? '400px' : '100px' }} className='createGroup nav-child'>
             <GrGroup size="40px"/>
             <p style={{ display: isOpen ? 'unset' : 'none' }}>Create chat group</p>
