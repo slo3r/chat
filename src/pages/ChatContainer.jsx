@@ -1,4 +1,4 @@
-import React ,{ useState }from 'react'
+import React ,{ useContext, useState }from 'react'
 import Messages from './Messages';
 import userImage from '../images/user.png';
 import {FaRegPaperPlane} from 'react-icons/fa';
@@ -6,9 +6,11 @@ import {BiDotsHorizontalRounded} from 'react-icons/bi';
 import ChatSettings from './ChatSettings';
 import {RxCross1} from 'react-icons/rx';
 import backgroundImage from '../images/wallpaper.jpg';
+import { ChatContext } from '../context/ChatContext';
 
 const ChatContainer = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const { data } = useContext(ChatContext);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -25,7 +27,7 @@ const ChatContainer = () => {
 
         <div className='topBar'>
             <img src={userImage}></img>
-            <p>Username</p>
+            <p>{data.user?.displayName || 'No user selected'}</p>
             <span className='dots' onClick={toggleSidebar}>
             <BiDotsHorizontalRounded size='40px' style={{cursor: 'pointer'}}/> 
             </span>

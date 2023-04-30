@@ -1,14 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { signOut, updateProfile } from 'firebase/auth';
 import { auth, db, storage } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
+import { ChatContext } from '../context/ChatContext';
 import userImage from '../images/user.png';
 import { MdOutlineLogout } from 'react-icons/md';
 import { HiOutlineArrowSmLeft } from 'react-icons/hi';
 import { GrGroup } from 'react-icons/gr';
 import { BsChatSquareDots } from 'react-icons/bs';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import Search from './Search';
 
 const Sidebar = (props) => {
@@ -22,8 +23,29 @@ const Sidebar = (props) => {
   const handleOnClick = () => {
     setIsOpen(!isOpen);
   };
-
+  //user list
+  const [chats, setChats] = useState([])
   const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
+
+  useEffect(() => {
+    const getChats = () => {
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+        setChats(doc.data());
+      });
+
+      return () => {
+        unsub();
+      };
+    };
+
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
+
+  const handleSelect = (u) => {
+    dispatch({ type: "CHANGE_USER", payload: u });
+  };
+//////////////////////////
   const displayName = currentUser?.displayName;
   const photoURL = currentUser?.photoURL;
   let photo = "";
@@ -71,7 +93,7 @@ const Sidebar = (props) => {
           <HiOutlineArrowSmLeft size="30px" style={{ transform: isOpen ? 'rotate(0deg)' : 'rotate(180deg)', transition: '0.4s' }}/>
       </div>
 
-        <div style={{ paddingTop: isOpen ? '0px' : '10px' }} className='active-user'>
+        <div style={{ paddingTop: isOpen ? '0px' : '0px' }} className='active-user'>
         <div className="currentUserImg">
             <label htmlFor="profile-pic-input">
               <img  src={photo} alt='' />
@@ -92,38 +114,31 @@ const Sidebar = (props) => {
                 <img src={userImage}></img>
                  <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
              </div>
-             <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
+              {/* <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
                 <img src={userImage}></img>
                  <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
              </div>
-             <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
+              <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
                 <img src={userImage}></img>
                  <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
              </div>
-             <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
+              <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
                 <img src={userImage}></img>
                  <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
-             <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
-             <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
-             <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
-             <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
-             <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
+             </div> */}
+             
+       {Object.entries(chats)?.map((chat) => (
+            <div className='userlist-user' key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
+
+          <img src={chat[1].userInfo.photoURL} alt="" />
+
+          <div style={{ display: isOpen ? 'unset' : 'none' }} className="userName">
+            <span>{chat[1].userInfo.displayName}</span>
+            <p>{chat[1].lastMessage?.text}sss</p>
+          </div>
+
+        </div>
+      ))}
              
         </div>
 

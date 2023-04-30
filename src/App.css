@@ -86,6 +86,7 @@ height: 100%;
 .active-user{
   display: flex;
   align-items: center;
+  margin-top: 10px;
 }
 .active-user img{
   width: 80px;
@@ -118,7 +119,19 @@ height: 100%;
 }
 .userName{
   font-size: 30px;
-  margin-right: auto;
+  /* margin-right: auto; */
+  /* display: flex;
+  flex-direction: row; */
+  margin-top: 10px;
+}
+.userName span{
+ /* background-color: blue; */
+}
+.userName p{
+  /* background-color: purple; */
+  font-size: 15px;
+  color: #474747;
+  margin-top: -10px;
 }
 /*---Slider---*/
 .slider{
@@ -173,16 +186,18 @@ background: red;
 
 .userlist-user{
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .userlist-user:hover{
 background-color: #ca2929;
 cursor: pointer;
 }
 .userlist-user img{
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
   margin-right: 20px;
   margin-left: 20px;
   
@@ -205,7 +220,6 @@ cursor: pointer;
 
 /* Search */
 .searchResult{
-  
   position: absolute;
   bottom: 213px;
   width: 300px;

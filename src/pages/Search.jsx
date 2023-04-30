@@ -14,6 +14,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { AuthContext } from "../context/AuthContext";
 
 const Search = (props) => {
   const [isOpen] = useState(true);
@@ -21,6 +22,7 @@ const Search = (props) => {
   const [value, setValue] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
+  const { currentUser } = useContext(AuthContext);
 
   const debounce = (func, wait) => {
     let timeout;
@@ -37,12 +39,12 @@ const Search = (props) => {
   };
 
   const handleSearch = async (searchValue) => {
+    if (!searchValue) return; 
     const q = query(
       collection(db, "users"),
       where("displayName", ">=", searchValue),
       where("displayName", "<=", searchValue + "\uf8ff")
     );
-
     try {
       if (searchValue !== "") {
         const q = query(
@@ -93,16 +95,56 @@ const Search = (props) => {
     }
   };
 
+  const handleSelect = async (selectedUser) => {
+    //check whether the group(chats in firestore) exists, if not create
+    const combinedId =
+      currentUser.uid > selectedUser.uid
+        ? currentUser.uid + selectedUser.uid
+        : selectedUser.uid + currentUser.uid;
+    console.log("currentUser.uid:", currentUser.uid);
+    console.log("selectedUser.uid:", selectedUser.uid);
+    console.log("combinedId:", combinedId);
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+  
+      if (!res.exists()) {
+        //create a chat in chats collection
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+  
+        //create user chats
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: selectedUser.uid,
+            displayName: selectedUser.displayName,
+            photoURL: selectedUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+  
+        await updateDoc(doc(db, "userChats", selectedUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (err) {}
+  
+    setUser(null);
+    setUsername("");
+  };
   return (
     <div
       style={{ width: props.isOpen ? "400px" : "100px" }}
       className="userSearch"
     >
       {err && <span>User not found!</span>}
-      <div className="searchResult">
+      <div style={{ display: props.isOpen ? "unset" : "none" }} className="searchResult">
         {user &&
           user.map((u) => (
-            <div className="searchEntry" key={u.uid}>
+            <div className="searchEntry" onClick={() => handleSelect(u)} key={u.uid}>
               <img src={u.photoURL || userImage} />
               <p>{u.displayName}</p>
               <AiOutlineUserAdd size="30px" />
