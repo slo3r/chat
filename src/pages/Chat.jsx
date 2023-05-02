@@ -12,7 +12,7 @@ const fixedPadding = () => {
 
   return (
     <div>
-        <div className='chat' style={{ paddingRight: isOpen ? '400px' : '100px' }}>
+        <div className='chat' style={{ paddingRight: isOpen ? '00px' : '00px' }}>
                 <div className='bckgrimage'>
                 </div>
 

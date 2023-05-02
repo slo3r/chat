@@ -110,10 +110,10 @@ const Sidebar = (props) => {
         </div>
 
         <div className='userlist'>
-              <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
+              {/* <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
                 <img src={userImage}></img>
                  <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
+             </div> */}
               {/* <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
                 <img src={userImage}></img>
                  <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
@@ -127,14 +127,14 @@ const Sidebar = (props) => {
                  <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
              </div> */}
              
-       {Object.entries(chats)?.map((chat) => (
+       {Object.entries(chats)?.sort((a,b)=>b[1].date - a[1].date).map((chat) => (
             <div className='userlist-user' key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
 
           <img src={chat[1].userInfo.photoURL} alt="" />
 
           <div style={{ display: isOpen ? 'unset' : 'none' }} className="userName">
             <span>{chat[1].userInfo.displayName}</span>
-            <p>{chat[1].lastMessage?.text}sss</p>
+            <p>{chat[1].lastMessage?.text}</p>
           </div>
 
         </div>
