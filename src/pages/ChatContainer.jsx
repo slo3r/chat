@@ -6,7 +6,6 @@ import {BiDotsHorizontalRounded} from 'react-icons/bi';
 import {MdAddPhotoAlternate} from'react-icons/md';
 import ChatSettings from './ChatSettings';
 import {RxCross1} from 'react-icons/rx';
-import backgroundImage from '../images/wallpaper.jpg';
 import { ChatContext } from '../context/ChatContext';
 import { AuthContext } from '../context/AuthContext';
 import { v4 as uuid } from "uuid";

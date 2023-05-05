@@ -482,4 +482,45 @@ max-width: 50%;
 .messageContent p{
   word-wrap: break-word;
 }
+/* Group Chat */
+.groupchatContainer{
+position: fixed;
+left: 50%;
+transform: translate(-50%, 0);
+top: 10%;
+}
+.groupchatForm{
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  background-color: red;
+ 
+  gap: 20px
+}
+.closeForm{
+  position: fixed;
+  top: 2%;
+  right: 2%;
+  cursor: pointer;
+}
 
+.groupaddUser{
+background-color: rgb(186, 186, 221);
+margin-top: -20px;
+border-bottom: solid black 1px;
+cursor: pointer;
+}
+.groupuserList{
+margin-top: -30px;
+background-color: aliceblue;
+}
+.groupuserList span p{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right: auto;
+}
+.groupuserList span{
+  display: flex;
+  align-items: center;
+  border-bottom: solid black 1px;
+}

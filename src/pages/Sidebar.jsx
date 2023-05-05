@@ -11,18 +11,16 @@ import { BsChatSquareDots } from 'react-icons/bs';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import Search from './Search';
+import ChatRoomForm from './ChatRoomForm';
 
 const Sidebar = (props) => {
   // toggle sidebar
   const [isOpen, setIsOpen] = useState(true);
-
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
     props.changePadding();
   };
-  const handleOnClick = () => {
-    setIsOpen(!isOpen);
-  };
+
   //user list
   const [chats, setChats] = useState([])
   const { currentUser } = useContext(AuthContext);
@@ -110,22 +108,6 @@ const Sidebar = (props) => {
         </div>
 
         <div className='userlist'>
-              {/* <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div> */}
-              {/* <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
-              <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div>
-              <div style={{ padding: isOpen ? '0px' : '20px' }} className='userlist-user'>
-                <img src={userImage}></img>
-                 <p style={{ display: isOpen ? 'unset' : 'none' }} className='userName'>Username</p>
-             </div> */}
              
        {Object.entries(chats)?.sort((a,b)=>b[1].date - a[1].date).map((chat) => (
             <div className='userlist-user' key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
@@ -142,11 +124,13 @@ const Sidebar = (props) => {
              
         </div>
 
+       {/* <ChatRoomForm /> */}
+
         <div className='nav'>
             <Search isOpen={isOpen} />
           <div style={{ width: isOpen ? '400px' : '100px' }} className='createGroup nav-child'>
             <GrGroup size="40px"/>
-            <p style={{ display: isOpen ? 'unset' : 'none' }}>Create chat group</p>
+            <p style={{ display: isOpen ? 'unset' : 'none' }}>Join chat room</p>
           </div>
           <div onClick={()=>signOut(auth)} style={{ width: isOpen ? '400px' : '100px' }} className='logOut nav-child'>
             <MdOutlineLogout size="40px"/>
