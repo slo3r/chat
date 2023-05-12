@@ -1,36 +1,37 @@
-import { useState } from 'react';
-import { db } from '../firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import React, { useState } from 'react'
 
-function ChatRoomForm() {
-  const [chatRoomName, setChatRoomName] = useState('');
+const ChatRoomForm = ({ handleJoinRoom, showChatRoomForm, setChatRoomForm }) => {
+  const [roomName, setRoomName] = useState('');
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const chatRoomDoc = await getDoc(doc(db, "chatRooms", chatRoomName));
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-
-    if (chatRoomDoc.exists) {
-      // join existing chat room
-      console.log('exists')
-    } else {
-      // create new chat room
-      console.log('doesnt exists')
-      await setDoc(doc(db, "chatRooms", chatRoomName), { messages: [] });
-      
+    if (roomName.trim()) {
+      handleJoinRoom(roomName.trim());
+      setRoomName('');
     }
+    setChatRoomForm(false);
   };
-  
 
-  const handleInputChange = (event) => {
-    setChatRoomName(event.target.value);
-  };
+  const handleCancel = () => {
+    setChatRoomForm(false); // hide the form on cancel button click
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={chatRoomName} onChange={handleInputChange} />
-      <button type="submit">Join</button>
-    </form>
-  );
+    <div className='groupchatContainer'>
+      <button onClick={handleCancel} className='closeForm'>X</button>
+      <form className='groupchatForm' onSubmit={handleSubmit}>
+        <h3>Join chat room</h3>
+        <input
+          type='text'
+          placeholder='Enter Room Name'
+          value={roomName}
+          onChange={(e) => setRoomName(e.target.value)}
+        />
+        <button type='submit'>Join Room</button>
+      </form>
+    </div>
+  )
 }
+
 export default ChatRoomForm

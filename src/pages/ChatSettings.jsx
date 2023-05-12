@@ -10,7 +10,7 @@ const ChatSettings = () => {
             <p>Settings</p>
         </div>
         <div>
-          <p className='chatSettingsUsers'>Users</p>
+          <p className='chatSettingsUsers'></p>
         </div>
     </div>
   )

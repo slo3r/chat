@@ -9,7 +9,7 @@ import { HiOutlineArrowSmLeft } from 'react-icons/hi';
 import { GrGroup } from 'react-icons/gr';
 import { BsChatSquareDots } from 'react-icons/bs';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import Search from './Search';
 import ChatRoomForm from './ChatRoomForm';
 
@@ -22,9 +22,38 @@ const Sidebar = (props) => {
   };
 
   //user list
+  const [showChatRoomForm, setChatRoomForm] = useState(false);
+  const { handleJoinRoom } = useContext(ChatContext);
   const [chats, setChats] = useState([])
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+
+//   useEffect(async() => {
+//   // Get the user document
+// const userDocRef = doc(db, 'users', user.uid);
+// const userDoc = await getDoc(userDocRef);
+
+// // Update the photoURL field
+// const updatedUserInfo = {
+//   ...userDoc.data(),//.userInfo,
+//   photoURL: newPhotoURL,
+// };
+
+// // Update the userChats document
+// const userChatsDocRef = doc(db, 'userChats', currentUser.uid);
+// const userChatsDoc = await getDoc(userChatsDocRef);
+
+// const updatedUserChats = {
+//   ...userChatsDoc.data(),
+//   [combinedId]: {
+//     ...userChatsDoc.data()[combinedId],
+//     userInfo: updatedUserInfo,
+//   },
+// };
+
+// await updateDoc(userChatsDocRef, updatedUserChats);
+
+//   });
 
   useEffect(() => {
     const getChats = () => {
@@ -42,7 +71,51 @@ const Sidebar = (props) => {
 
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
+    let userId = u.uid;
+    let combinedId =
+      currentUser.uid > u.uid
+        ? currentUser.uid + u.uid
+        : u.uid + currentUser.uid;
+    profilepicUpdate(userId, combinedId);
+    //console.log(currentUser.uid);
+    //console.log(u.uid);
+  
+        console.log(combinedId);
   };
+  const profilepicUpdate = async(userId, combinedId) =>{
+    const userInfoRef = doc(db, "users", userId);
+    const userInfoSnapshot = await getDoc(userInfoRef);
+    const userInfoData = userInfoSnapshot.data();
+
+    // u.photoURL = userInfoData.photoURL
+    // console.log(userInfoData.photoURL)
+    const userChatsRef = doc(db, "userChats", userId, "userInfo");
+    const userChatsDoc = await getDoc(userChatsRef);
+    const combinedIdID = userChatsDoc.data().combinedId;
+    console.log(userChatsDoc.data())
+  // await updateDoc(userChatsRef, {
+  //   combinedId.userInfo.photoURL: userInfoData.photoURL
+  // });
+  // const existingData = await getDoc(userChatsRef);
+  
+  // if (existingData.exists()) {
+  //   const combinedIdID = existingData.data().combinedId;
+  //   console.log(combinedIdID);
+  //   const updatedUserInfo = {
+  //     ...combinedId.userInfo,
+  //     photoURL: userInfoData.photoURL
+  //   };
+  
+  //   await updateDoc(userChatsRef, {
+  //     combinedId: {
+  //       ...combinedId,
+  //       userInfo: updatedUserInfo
+  //     }
+  //   });
+  // }
+  
+  };
+
 //////////////////////////
   const displayName = currentUser?.displayName;
   const photoURL = currentUser?.photoURL;
@@ -84,7 +157,6 @@ const Sidebar = (props) => {
   }else{
     photo = currentUser.photoURL;
   }
- 
   return (
     <div className='sidebar' style={{ width: isOpen ? '400px' : '100px' }}>
       <div className='slider' style={{ left: isOpen ? '375px' : '75px' }} onClick={toggleSidebar}>
@@ -111,11 +183,9 @@ const Sidebar = (props) => {
              
        {Object.entries(chats)?.sort((a,b)=>b[1].date - a[1].date).map((chat) => (
             <div className='userlist-user' key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
-
-          <img src={chat[1].userInfo.photoURL} alt="" />
-
-          <div style={{ display: isOpen ? 'unset' : 'none' }} className="userName">
-            <span>{chat[1].userInfo.displayName}</span>
+              <img src={chat[1].userInfo.photoURL ? chat[1].userInfo.photoURL : userImage} alt="" />
+            <div style={{ display: isOpen ? 'unset' : 'none' }} className="userName">
+              <span>{chat[1].userInfo.displayName}</span>
             <p>{chat[1].lastMessage?.text}</p>
           </div>
 
@@ -124,11 +194,14 @@ const Sidebar = (props) => {
              
         </div>
 
-       {/* <ChatRoomForm /> */}
+        {showChatRoomForm && (
+        <ChatRoomForm handleJoinRoom={handleJoinRoom} showChatRoomForm={showChatRoomForm} setChatRoomForm={setChatRoomForm} />
+      )
+      }
 
         <div className='nav'>
             <Search isOpen={isOpen} />
-          <div style={{ width: isOpen ? '400px' : '100px' }} className='createGroup nav-child'>
+          <div onClick={() => {setChatRoomForm(true); handleSelect(null);}} style={{ width: isOpen ? '400px' : '100px' }} className='createGroup nav-child'>
             <GrGroup size="40px"/>
             <p style={{ display: isOpen ? 'unset' : 'none' }}>Join chat room</p>
           </div>

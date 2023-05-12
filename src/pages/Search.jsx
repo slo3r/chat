@@ -116,7 +116,7 @@ const Search = (props) => {
           [combinedId + ".userInfo"]: {
             uid: selectedUser.uid,
             displayName: selectedUser.displayName,
-            photoURL: selectedUser.photoURL,
+            photoURL: selectedUser.photoURL ? selectedUser.photoURL : null,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
@@ -125,7 +125,7 @@ const Search = (props) => {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
+            photoURL: currentUser.photoURL ? currentUser.photoURL : null,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });

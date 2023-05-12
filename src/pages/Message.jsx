@@ -2,14 +2,16 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import userImage from '../images/user.png';
 import { ChatContext } from '../context/ChatContext';
 import { AuthContext } from '../context/AuthContext';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../firebase';
 
-
-const Message = ({message}) => {
+const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
   const [timeDiff, setTimeDiff] = useState("");
+  const [sender, setSender] = useState(null);
 
-  const  currentDate = new Date();
+  const currentDate = new Date();
 
   const ref = useRef();
 
@@ -24,12 +26,23 @@ const Message = ({message}) => {
     }, 1000);
     return () => clearInterval(interval);
   }, [message, currentDate]);
-  
+
+  useEffect(() => {
+    const fetchSender = async () => {
+      const userRef = doc(db, "users", message.senderId);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        setSender(userDoc.data());
+      }
+    };
+
+    fetchSender();
+  }, [message.senderId]);
 
   const updateTimeDiff = () => {
     const currentDate = new Date();
     const diff = currentDate - message.date.toDate();
-    
+
     if (diff < 60000) {
       setTimeDiff(`${Math.floor(diff / 1000)} seconds ago`);
       console.log("updating")
@@ -41,16 +54,17 @@ const Message = ({message}) => {
       setTimeDiff(`${Math.floor(diff / 86400000)} days ago`);
     }
   };
+
   return (
     <div ref={ref} className={`message ${message.senderId === currentUser.uid && "owner"}`}>
-        <div className='messageInfo'>
-            <img src={ message.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL}></img>
-            <span>{timeDiff}</span>
-        </div>
-        <div className='messageContent'>
-            <p>{message.text}</p>
-            {message.img && <img src={message.img} alt="" />}
-        </div>
+      <div className='messageInfo'>
+        <img src={sender ? sender.photoURL : userImage}></img>
+        <span>{timeDiff}</span>
+      </div>
+      <div className='messageContent'>
+        <p>{message.text}</p>
+        {message.img && <img src={message.img} alt="" />}
+      </div>
     </div>
   )
 }
