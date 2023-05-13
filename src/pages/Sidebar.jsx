@@ -76,43 +76,28 @@ const Sidebar = (props) => {
       currentUser.uid > u.uid
         ? currentUser.uid + u.uid
         : u.uid + currentUser.uid;
-    profilepicUpdate(userId, combinedId);
+    profilepicUpdate(userId, combinedId, u);
     //console.log(currentUser.uid);
     //console.log(u.uid);
   
         console.log(combinedId);
   };
-  const profilepicUpdate = async(userId, combinedId) =>{
+  const profilepicUpdate = async(userId, combinedId, u) =>{
     const userInfoRef = doc(db, "users", userId);
     const userInfoSnapshot = await getDoc(userInfoRef);
     const userInfoData = userInfoSnapshot.data();
 
-    // u.photoURL = userInfoData.photoURL
-    // console.log(userInfoData.photoURL)
-    const userChatsRef = doc(db, "userChats", userId, "userInfo");
+    u.photoURL = userInfoData.photoURL
+    console.log(userInfoData.photoURL)
+    const userChatsRef = doc(db, "userChats", currentUser.uid);
     const userChatsDoc = await getDoc(userChatsRef);
-    const combinedIdID = userChatsDoc.data().combinedId;
-    console.log(userChatsDoc.data())
-  // await updateDoc(userChatsRef, {
-  //   combinedId.userInfo.photoURL: userInfoData.photoURL
-  // });
-  // const existingData = await getDoc(userChatsRef);
-  
-  // if (existingData.exists()) {
-  //   const combinedIdID = existingData.data().combinedId;
-  //   console.log(combinedIdID);
-  //   const updatedUserInfo = {
-  //     ...combinedId.userInfo,
-  //     photoURL: userInfoData.photoURL
-  //   };
-  
-  //   await updateDoc(userChatsRef, {
-  //     combinedId: {
-  //       ...combinedId,
-  //       userInfo: updatedUserInfo
-  //     }
-  //   });
-  // }
+    const combinedIdData = userChatsDoc.data()[combinedId];
+    console.log(combinedIdData.userInfo.photoURL)//current profilepic local
+    combinedIdData.userInfo.photoURL = userInfoData.photoURL;
+
+    await updateDoc(userChatsRef, {
+      [`${combinedId}.userInfo.photoURL`]: userInfoData.photoURL
+    });
   
   };
 
