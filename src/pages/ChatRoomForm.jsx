@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const ChatRoomForm = ({ handleJoinRoom, showChatRoomForm, setChatRoomForm }) => {
+const ChatRoomForm = ({ handleJoinRoom, setChatRoomForm }) => {
   const [roomName, setRoomName] = useState('');
 
   const handleSubmit = (e) => {
@@ -14,7 +14,7 @@ const ChatRoomForm = ({ handleJoinRoom, showChatRoomForm, setChatRoomForm }) => 
   };
 
   const handleCancel = () => {
-    setChatRoomForm(false); // hide the form on cancel button click
+    setChatRoomForm(false);
   }
 
   return (

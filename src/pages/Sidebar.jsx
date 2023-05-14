@@ -28,33 +28,6 @@ const Sidebar = (props) => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
-//   useEffect(async() => {
-//   // Get the user document
-// const userDocRef = doc(db, 'users', user.uid);
-// const userDoc = await getDoc(userDocRef);
-
-// // Update the photoURL field
-// const updatedUserInfo = {
-//   ...userDoc.data(),//.userInfo,
-//   photoURL: newPhotoURL,
-// };
-
-// // Update the userChats document
-// const userChatsDocRef = doc(db, 'userChats', currentUser.uid);
-// const userChatsDoc = await getDoc(userChatsDocRef);
-
-// const updatedUserChats = {
-//   ...userChatsDoc.data(),
-//   [combinedId]: {
-//     ...userChatsDoc.data()[combinedId],
-//     userInfo: updatedUserInfo,
-//   },
-// };
-
-// await updateDoc(userChatsDocRef, updatedUserChats);
-
-//   });
-
   useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
@@ -80,7 +53,7 @@ const Sidebar = (props) => {
     //console.log(currentUser.uid);
     //console.log(u.uid);
   
-        console.log(combinedId);
+        // console.log(combinedId);
   };
   const profilepicUpdate = async(userId, combinedId, u) =>{
     const userInfoRef = doc(db, "users", userId);
@@ -88,11 +61,11 @@ const Sidebar = (props) => {
     const userInfoData = userInfoSnapshot.data();
 
     u.photoURL = userInfoData.photoURL
-    console.log(userInfoData.photoURL)
+    // console.log(userInfoData.photoURL)
     const userChatsRef = doc(db, "userChats", currentUser.uid);
     const userChatsDoc = await getDoc(userChatsRef);
     const combinedIdData = userChatsDoc.data()[combinedId];
-    console.log(combinedIdData.userInfo.photoURL)//current profilepic local
+    // console.log(combinedIdData.userInfo.photoURL)
     combinedIdData.userInfo.photoURL = userInfoData.photoURL;
 
     await updateDoc(userChatsRef, {
@@ -105,8 +78,6 @@ const Sidebar = (props) => {
   const displayName = currentUser?.displayName;
   const photoURL = currentUser?.photoURL;
   let photo = "";
-  // const photo = currentUser.photoURL ? currentUser.photoURL : userImage;
-
 
   const handleProfilePicUpload = async (e) => {
     e.preventDefault();
@@ -138,7 +109,6 @@ const Sidebar = (props) => {
   };
   if(photoURL === null){
     photo = userImage;
-    console.log("working")
   }else{
     photo = currentUser.photoURL;
   }

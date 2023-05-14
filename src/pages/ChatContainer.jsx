@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Messages from './Messages';
 import groupImage from '../images/group.png'
 import userImage from '../images/user.png';
@@ -10,14 +10,13 @@ import { RxCross1 } from 'react-icons/rx';
 import { ChatContext } from '../context/ChatContext';
 import { AuthContext } from '../context/AuthContext';
 import { v4 as uuid } from "uuid";
-import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc, getDoc } from 'firebase/firestore';
+import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from '../firebase';
 
 const ChatContainer = () => {
   const [isOpen, setIsOpen] = useState(true);
   const { currentUser } = useContext(AuthContext);
-  const [value, setValue] = useState('');
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
   const { data } = useContext(ChatContext);
@@ -89,16 +88,6 @@ const ChatContainer = () => {
         });
       }
     }
-
-    // // Update last message and date for current user
-    // await updateDoc(doc(db, "userChats", data.roomName), {
-    //   [data.chatId + ".lastMessageGroup"]: {
-    //     text,
-    //   },
-    //   [data.chatId + ".date"]: serverTimestamp(),
-    // });
-
-    // Update last message and date for other user (if private chat)
     
     if (!data.roomName) {
       await updateDoc(doc(db, "userChats", currentUser.uid), {
@@ -118,13 +107,6 @@ const ChatContainer = () => {
     setText("");
     setImg(null);
   };
-  //console.log(data.chatId.userInfo)
-
-  // await updateDoc(doc(db, "userChats", data.user.uid), {
-  //   [data.chatId + ".userInfo"]: {
-  //     photoURL:,
-  //   },
-  // });
 
   return (
     <div className='chatComponent'>
@@ -146,10 +128,6 @@ const ChatContainer = () => {
       </div>
 
       <div className='mainBar'>
-
-        {/* <div className='test' style={{ width: sidebarOpen ? '1250px' : '5200px' }}>
-<Messages />
-</div> */}
         <Messages />
       </div>
 
@@ -172,7 +150,6 @@ const ChatContainer = () => {
         </label>
         <span onClick={handleSend} className='send-icon'>
           <FaRegPaperPlane size='30px' />
-          {/* style={{cursor: 'pointer',position: 'absolute',bottom: '10px',right:'20px'}} */}
         </span>
       </div>
 

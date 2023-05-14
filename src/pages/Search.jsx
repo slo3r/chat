@@ -5,7 +5,6 @@ import {
   collection,
   query,
   where,
-  getDocs,
   setDoc,
   doc,
   updateDoc,
@@ -17,7 +16,6 @@ import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 
 const Search = (props) => {
-  const [isOpen] = useState(true);
   const [username, setUsername] = useState("");
   const [value, setValue] = useState("");
   const [user, setUser] = useState(null);
@@ -101,9 +99,9 @@ const Search = (props) => {
       currentUser.uid > selectedUser.uid
         ? currentUser.uid + selectedUser.uid
         : selectedUser.uid + currentUser.uid;
-    console.log("currentUser.uid:", currentUser.uid);
-    console.log("selectedUser.uid:", selectedUser.uid);
-    console.log("combinedId:", combinedId);
+    // console.log("currentUser.uid:", currentUser.uid);
+    // console.log("selectedUser.uid:", selectedUser.uid);
+    // console.log("combinedId:", combinedId);
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
   
